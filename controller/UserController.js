@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const { UserModel }=require("../model/UserModel");
 const jwt = require('jsonwebtoken');
 
-UserRouter.post("/signup",async(req,res)=>{
+UserRouter.post("/api/signup",async(req,res)=>{
     if(!req.body.email){
         return res.status(400).json({
             message:"Email is missing",
@@ -21,7 +21,7 @@ UserRouter.post("/signup",async(req,res)=>{
     /* const newItem=new UserModel(req.body);
    const result=await newItem.save(); */
    const {first_name,last_name,email,password}=req.body;
-   const hashpassword=bcrypt.hash(password,10);
+   const hashpassword=await bcrypt.hash(password,10);
    const newItem=new UserModel({first_name,last_name,email,password:hashpassword}) 
    const result=await newItem.save();
         if(result && result._id){
