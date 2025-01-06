@@ -2,6 +2,7 @@ const UserRouter=require("express").Router();
 const bcrypt = require('bcrypt');
 const { UserModel }=require("../model/UserModel");
 const jwt = require('jsonwebtoken');
+const nodemailer = require("nodemailer");
 
 UserRouter.post("/api/signup",async(req,res)=>{
     if(!req.body.email){
@@ -74,7 +75,7 @@ UserRouter.post("/signin",async(req,res)=>{
 
 })
 UserRouter.post("/request-reset",(req,res)=>{
-    const {email}=req.body;
+    const {email}=req.body.email;
     if(!email){
         res.status(400).json({
             message:"Email is required",
@@ -92,6 +93,30 @@ UserRouter.post("/request-reset",(req,res)=>{
         const token=jwt.sign({id:user._id,email:user.email}, process.env.JWT_SECRET,
             {expiresIn:"1h"})
             console.log(`reset token is,${token}`)
+            const transporter = nodemailer.createTransport({
+                host: "smtp.ethereal.email",
+                port: 587,
+                secure: false, // true for port 465, false for other ports
+                auth: {
+                  user: "ponmarimdeiveega@gmail.com",
+                  pass: "jn7jnAPss4f63QBp6D",
+                },
+              });
+              async function main() {
+                // send mail with defined transport object
+                const info = await transporter.sendMail({
+                  from: "ponmarimdeiveega@gmail.com",
+                  to: "skmrajan1995@gmail.com", // list of receivers
+                  subject: "Hello ✔", // Subject line
+                  text: `${token}`, // plain text body
+                  html: "<b>Hello world?</b>", // html body
+                });
+              
+                console.log("Message sent: %s", info.messageId);
+                // Message sent: <d786aa62-4e0a-070a-47ed-0b0666549519@ethereal.email>
+              }
+              
+              main().catch(console.error);
            return  res.status(200).json({
             message:"password reset link send to email",
             success:true

@@ -13,6 +13,6 @@ require("./dbconfig");
 web_server.use('/user',UserRouter);
 
 web_server.listen(4000,()=>{
-    console.log("server stated successfully")
+    console.log("server started successfully")
     console.log(`http://${process.env.HOST_NAME}:${process.env.HOST_PORT}`);
 })
