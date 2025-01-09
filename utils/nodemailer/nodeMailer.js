@@ -1,12 +1,13 @@
 const nodemailer = require("nodemailer");
+import { generateToken } from "../jwt";
 
 const transporter = nodemailer.createTransport({
   host: "smtp.ethereal.email",
   port: 587,
   secure: false, // true for port 465, false for other ports
   auth: {
-    user: "maddison53@ethereal.email",
-    pass: "jn7jnAPss4f63QBp6D",
+    user: "ponmarimdeiveega@gmail.com",
+    pass: "Sri1234@",
   },
 });
 
@@ -14,8 +15,8 @@ const transporter = nodemailer.createTransport({
 async function main() {
   // send mail with defined transport object
   const info = await transporter.sendMail({
-    from: '"Maddison Foo Koch 👻" <maddison53@ethereal.email>', // sender address
-    to: "bar@example.com, baz@example.com", // list of receivers
+    from: "ponmarimdeiveega@gmail.com", // sender address
+    to: "skmrajan1995@gmail.com", // list of receivers
     subject: "Hello ✔", // Subject line
     text: "Hello world?", // plain text body
     html: "<b>Hello world?</b>", // html body
